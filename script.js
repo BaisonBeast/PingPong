@@ -43,6 +43,13 @@ function movePaddle(cPaddle, change){
   }
 }
 
+/*Rest the game*/
+function resetGame(){
+  ball.style.top=window.innerHeight*0.45+"px";
+  ball.style.left=window.innerWidth*0.45+"px";
+  requestAnimationFrame(moveBall);
+}
+
 function moveBall(){
   /*Getting coordinates of the ball*/
   let cordinate=ball.getBoundingClientRect();
@@ -54,8 +61,8 @@ function moveBall(){
 
 //**********************No Collison between  paddle and ball *************
   /*If the ball misses the paddle*/
-  let hasTouchedLeft= left < bound.left;
-  let hasTouchedRight=right > bound.right;
+  let hasTouchedLeft= left <= bound.left;
+  let hasTouchedRight=right >= bound.right;
 
   if(hasTouchedLeft || hasTouchedRight){
     if(hasTouchedLeft){
@@ -66,7 +73,8 @@ function moveBall(){
          document.location.reload();
       }
       else{
-        resetGame();
+        setTimeout(() => resetGame(), 1000);
+          return;
       }
     }else{
         rightPlayerLife--;
@@ -76,16 +84,12 @@ function moveBall(){
           document.location.reload();
         }
         else{
-          resetGame();
+          setTimeout(() => resetGame(), 1000);
+          return;
         }
     }
 }
-/*Rest the game*/
-function resetGame(){
-  ball.style.top=window.innerHeight*0.45+"px";
-  ball.style.left=window.innerWidth*0.45+"px";
-  requestAnimationFrame(moveBall);
-}
+
 //***********************************************************
 
 //***************************  Collison check **********************
